@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EstoquesDoZ - Gerenciamento de Estoque</title>
+    <meta name="description" content="Sistema de gerenciamento de estoque" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Barra Lateral / Navegação -->
+      <aside class="sidebar">
+        <div class="logo-container">
+          <h1 class="logo">EstoquesZ</h1>
+          <p class="subtitle">Gerenciamento de Estoque</p>
+        </div>
+        
+        <div class="user-info">
+          <span class="user-avatar">👤</span>
+          <span id="username-display">Usuário</span>
+        </div>
+        
+        <nav class="navigation">
+          <ul class="nav-list">
+            <li class="nav-item active">
+              <a href="#" class="nav-link" data-page="dashboard">
+                <span class="icon">📊</span>
+                <span>Painel de Controle</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" data-page="products">
+                <span class="icon">📦</span>
+                <span>Produtos</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" data-page="settings">
+                <span class="icon">⚙️</span>
+                <span>Configurações</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <div class="logout">
+          <button class="logout-button" id="logout-btn">
+            <span class="icon">🚪</span>
+            <span>Sair</span>
+          </button>
+        </div>
+      </aside>
+      
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Páginas carregas -->
+        <div id="page-content"></div>  <!-- Conteúdos do JS aparecem dentro da DIV -->
+      </main>
+    </div>
+
+    <!-- Página - Painel de Controle -->
+    <template id="dashboard-template">
+      <div class="page-header">
+        <h1>Painel de Controle</h1>
+        <p class="page-description">Bem-vindo ao EstoquesZ, informações de todo o estoque.</p>
+      </div>
+      
+      <!-- Informações -->
+      <div class="metrics-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>Total de Produtos</h3>
+            <span class="card-icon">📦</span>
+          </div>
+          <div class="card-content">
+            <p class="card-value" id="total-products">0</p>  <!-- Modifica o número dependendo do JavaScript -->
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h3>Itens com Estoque Baixo</h3>
+            <span class="card-icon">⚠️</span>
+          </div>
+          <div class="card-content">
+            <p class="card-value" id="low-stock">0</p>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h3>Valor do Estoque</h3>
+            <span class="card-icon">💰</span>
+          </div>
+          <div class="card-content">
+            <p class="card-value" id="inventory-value">$0.00</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Lista de Produtos -->
+      <div class="section">
+        <h2>Inventário de Produtos</h2>
+        <div class="product-list-container">
+          <div class="search-container">
+            <input type="text" id="product-search" placeholder="Buscar produtos..." class="search-input">
+          </div>
+          
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Tipo</th>
+                <th>Categoria</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th class="acoes">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="product-list">
+              <!-- Products will be loaded here by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </template>
+
+    <!-- Página - Produtos -->
+    <template id="products-template">
+      <div class="page-header">
+        <h1>Produtos</h1>
+        <p class="page-description">Gerenciar seu inventário de produtos. Gerencie produtos removidos e adicione produtos</p>
+      </div>
+        <div class="header-actions">
+          <button class="button primary" id="add-product-btn">
+            <span class="icon">➕</span>
+            <span>Adicionar Produto</span>
+          </button>
+        </div>
+      
+      <div class="product-list-container">
+        <div class="search-container">
+          <input type="text" id="product-search" placeholder="Buscar produtos..." class="search-input">
+        </div>
+        
+        <table class="product-table">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Tipo</th>
+              <th>Categoria</th>
+              <th>Preço</th>
+              <th>Estoque</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="product-list">
+            <!-- Aqui entra os scripts carregados pelo javascript -->
+          </tbody>
+        </table>
+      </div>
+      <div class="section">
+        <h2>Produtos Removidos</h2>
+        <p class="section-description">Produtos que foram removidos do inventário. Você pode restaurá-los se necessário.</p>
+        <div class="product-list-container">
+          <table class="product-table">
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Tipo</th>
+                  <th>Categoria</th>
+                  <th>Preço</th>
+                  <th>Removido em</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="removed-products-list"><!-- Aqui entra os scripts carregados pelo javascript --></tbody>
+          </table>
+        </div>
+    </div>
+    </template>
+
+      <!-- Página de configurações -->
+    <template id="settings-template">
+
+      <div class="page-header">
+        <h1>Configurações</h1>
+        <p class="page-description">Gerencie as configurações do sistema</p>
+      </div>
+      <div class="setting-section">
+
+      </div>
+
+    </template>
+
+
+      <!-- Interface do Prompt -->
+    <div id="custom-prompt-overlay" class="modal-overlay">
+      <div id="custom-prompt-modal" class="modal-content">
+          <h2 id="custom-prompt-title"></h2>
+          <p id="custom-prompt-message"></p>
+          <input type="number" id="custom-prompt-input">
+          <div class="modal-buttons">
+            <button id="custom-prompt-ok-btn" class="button primary">OK</button>
+            <button id="custom-prompt-cancel-btn" class="button secondary">Cancelar</button>
+          </div>
+      </div>
+    </div>
+
+      <!-- Interface do Alert - Utilizei um Snippet de Notificação Temporária (Toast) -->
+    <div id="toast-notification" class="toast">
+      <p id="toast-message"></p>
+    </div>
+
+
+    <script src="assets/js/main.js"></script>
+  </body> 
+</html>

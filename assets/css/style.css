@@ -1,0 +1,648 @@
+/* Base Styles */
+:root {
+  --background: #f8fafc;              /* Cor de fundo principal da página */
+  --foreground: #1e293b;              /* Cor principal do texto (contraste com background) */
+  --card: #ffffff;                    /* Cor de fundo dos cartões/componentes */
+  --card-foreground: #1e293b;         /* Cor do texto nos cartões */
+  --primary: #334155;                 /* Cor primária (botões, links ou destaques principais) */
+  --primary-foreground: #f8fafc;      /* Cor do texto sobre a cor primária */
+  --secondary: #f1f5f9;               /* Cor secundária (botões alternativos, áreas suaves) */
+  --secondary-foreground: #1e293b;    /* Cor do texto sobre a cor secundária */
+  --muted: #f1f5f9;                   /* Cor de elementos atenuados ou menos importantes */
+  --muted-foreground: #64748b;        /* Cor do texto atenuado */
+  --accent: #10b981;                  /* Cor de destaque (por exemplo, links ou botões especiais) */
+  --accent-foreground: #f8fafc;       /* Cor do texto sobre a cor de destaque */
+  --destructive: #ef4444;             /* Cor de ações destrutivas (ex: excluir, erro) */
+  --destructive-rgb: 239, 68, 68;
+  --destructive-foreground: #f8fafc;  /* Cor do texto em botões ou alertas destrutivos */
+  --success: #10b981;                 /* Cor para indicar sucesso (ex: ação completada) */
+  --success-rgb: 16, 185, 129; 
+  --success-foreground: #f8fafc;      /* Cor do texto em mensagens de sucesso */
+  --warning: #f59e0b;                 /* Cor para avisos ou alertas */
+  --warning-foreground: #f8fafc;      /* Cor do texto em mensagens de aviso */
+  --border: #e2e8f0;                  /* Cor de bordas (caixas, inputs, etc) */
+  --input: #e2e8f0;                   /* Cor de fundo de inputs e campos de formulário */
+  --ring: #1e293b;                    /* Cor do contorno/foco em inputs (usado em efeitos de foco) */
+  --radius: 0.5rem;                   /* Raio padrão das bordas (para cantos arredondados) */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.5;
+}
+
+/* Layout */
+.container {
+  display: flex;  
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fixa a barra lateral */
+  top: 0;
+  left: 0;
+  height: 100vh; /* Ocupa toda a altura da tela */
+  z-index: 10; /* Garante que a barra lateral fique acima do conteúdo principal */
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  margin-left: 250px; /* Adiciona margem para não sobrepor a barra lateral */
+}
+
+/* Logo e Navegação */
+.logo-container {
+  margin-bottom: 2rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 0.875rem;  
+  opacity: 0.7;  
+}
+
+.navigation {
+  margin-top: 2rem;
+  margin-bottom: auto;
+}
+
+.nav-list {
+  list-style: none;
+}
+
+.nav-item {
+  margin-bottom: 0.5rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: var(--primary-foreground);
+  border-radius: var(--radius);
+  transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active .nav-link {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.icon {
+  margin-right: 0.75rem;
+}
+
+
+.logout {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  width: 100%;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: var(--primary-foreground);
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  opacity: 1;
+}
+
+/* Informações do usuário na barra lateral */
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+/* Header da página */
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.page-description {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: right; /* ou space-between para alinhar a esquerda */
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+/* Cards do Painel de Controle */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.card-header h3 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.card-icon {
+  font-size: 1.25rem;
+}
+
+.card-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.card-description {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.card-trend {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.trend-period {
+  color: var(--muted-foreground);
+  margin-left: 0.25rem;
+}
+
+.card-trend.positive {
+  color: var(--success);
+}
+
+.card-trend.negative {
+  color: var(--destructive);
+}
+
+/* Section da lista de produtos do Painel de Controle */
+.section {
+  margin-top: 2rem;
+}
+
+.section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-description {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+/* Tabela de produtos */
+.product-list-container {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-container {
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.625rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  font-size: 0.875rem;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.product-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+.product-table tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* Arrumar a parte de ações */
+th.acoes {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+}
+
+.action-button {
+  margin-top: 0.9rem;
+}
+
+
+/* Stock Level Indicators */
+.stock-level {
+  display: flex;
+  align-items: center;
+}
+
+.stock-level::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.stock-level.high {
+  color: var(--success);
+}
+
+.stock-level.medium {
+  color: var(--warning);
+}
+
+.stock-level.low {
+  color: var(--destructive);
+}
+
+.stock-level.high::before {
+  background-color: var(--success);
+}
+
+.stock-level.medium::before {
+  background-color: var(--warning);
+}
+
+.stock-level.low::before {
+  background-color: var(--destructive);
+}
+
+/* Botões */
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.button.primary {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.button.primary:hover {
+  opacity: 0.9;
+}
+
+.button.secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.button.secondary:hover {
+  background-color: var(--muted);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.action-button:hover {
+  opacity: 1;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .navigation {
+    margin-top: 1rem;
+  }
+  
+  .main-content {
+    padding: 1rem;
+  }
+  
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .header-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+/* Product Images */
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsivo para imagens */
+@media (max-width: 768px) {
+  .product-image {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .product-info {
+    gap: 0.5rem;
+  }
+}
+
+/* Página de login */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--background);
+  padding: 1rem;
+}
+
+.login-card {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.login-input {
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  font-size: 1rem;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(51, 65, 85, 0.2);
+}
+
+.login-button {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 0.5rem;
+}
+
+.login-button:hover {
+  background-color: #0ea271;
+}
+
+.error-message {
+  color: var(--destructive);
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: none;
+  margin-top: 0.25rem;
+}
+
+
+/* Interface do Prompt */
+
+/* Estilos para o overlay (fundo escuro) */
+.modal-overlay {
+  display: none; /* Inicialmente escondido */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(var(--foreground-rgb), 0.5); /* Fundo escuro com opacidade */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Garante que fique acima de outros elementos */
+}
+
+/* Estilos para o conteúdo do modal (a caixa branca) */
+.modal-content {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 0 10px rgba(var(--foreground-rgb), 0.2);
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  border: 1.5px solid #444444;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: var(--card-foreground);
+}
+
+.modal-content p {
+  color: var(--muted-foreground);
+  margin-bottom: 15px;
+}
+
+.modal-content input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--input);
+  border-radius: var(--radius);
+  box-sizing: border-box;
+  color: var(--card-foreground);
+  background-color: var(--input);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  padding: 10px 15px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modal-buttons button.primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+
+.modal-buttons button.secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: var(--secondary);
+}
+
+
+/* Configurando o Alert */
+.toast {  /* Toast padrao - verde */
+  display: none;
+  position: fixed;
+  top: 20px; /* Ou bottom: 20px; */
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--success);
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  z-index: 1011; /* Acima do modal */
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.toast.show {
+  display: block;
+  opacity: 1;
+  font-weight: bold;
+}
+
+/* Estilo para a notificação de erro (vermelha) */
+.toast.show.error {
+  color: var(--destructive); /* Cor do texto sobre o vermelho */
+  z-index: 1011;
+}
